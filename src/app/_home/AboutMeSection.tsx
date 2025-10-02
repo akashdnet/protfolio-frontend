@@ -1,5 +1,3 @@
-"use client"
-
 import React from "react"
 import Image from "next/image"
 import Link from "next/link"
@@ -80,12 +78,12 @@ const AboutMe = () => {
                 </div>
               </div>
 
-              {/* GitHub Link inside card */}
+              
               <div className="mt-6">
                 <Link
                   href="https://github.com/akashdnet"
                   target="_blank"
-                  className="inline-flex items-center gap-2 rounded-full border-2 border-slate-800 bg-white px-5 py-2 font-bold text-slate-800 shadow-[3px_3px_0px_#000] hover:bg-slate-100 transition"
+                  className="inline-flex items-center gap-2  border-2 border-slate-800 bg-white px-5 py-2 font-bold text-slate-800 shadow-[3px_3px_0px_#000] hover:bg-slate-100 transition rounded-full"
                 >
                   🐙 GitHub Profile
                 </Link>
