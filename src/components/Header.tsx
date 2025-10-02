@@ -3,6 +3,16 @@
 import Link from "next/link"
 import { useState } from "react"
 
+
+
+const navList = [
+            { name: "Home", href: "#home" },
+            { name: "About", href: "#about" },
+            { name: "Blogs", href: "#blog" },
+            { name: "Projects", href: "#projects" },
+            { name: "Dashboard", href: "/dashboard" },
+          ]
+
 export default function Header() {
   const [open, setOpen] = useState(false)
 
@@ -16,12 +26,7 @@ export default function Header() {
 
 
         <nav className="hidden md:flex justify-center gap-8 font-extrabold text-slate-900 text-lg mx-auto">
-          {[
-            { name: "Home", href: "#home" },
-            { name: "About", href: "#about" },
-            { name: "Blogs", href: "#blog" },
-            { name: "Projects", href: "#projects" },
-          ].map((item, idx) => (
+          {navList.map((item, idx) => (
             <Link
               key={idx}
               href={item.href}
@@ -61,12 +66,7 @@ export default function Header() {
             >
               ✕
             </button>
-            {[
-            { name: "Home", href: "#home" },
-            { name: "About", href: "#about" },
-            { name: "Blogs", href: "#blog" },
-            { name: "Projects", href: "#projects" },
-          ].map((item, idx) => (
+            {navList.map((item, idx) => (
               <Link
                 key={idx}
                 href={item.href}
