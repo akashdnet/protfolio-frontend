@@ -1,92 +1,86 @@
 "use client"
 
-import * as React from "react"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-} from "@/components/ui/navigation-menu"
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet"
-import { Menu } from "lucide-react"
+import { useState } from "react"
 
-const Header: React.FC = () => {
-  const navLinks = [
-    { href: "#home", label: "Home" },
-    { href: "#about", label: "About" },
-    { href: "#projects", label: "Projects" },
-    { href: "#blog", label: "Blog" },
-    { href: "/dashboard", label: "Dashboard" },
-  ]
+export default function Header() {
+  const [open, setOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z w-full bg-transparent backdrop-blur-md shadow-md">
-      <div className="container mx-auto max-w-5xl flex items-center justify-center px-6 md:px-8 py-4">
+    <header className="sticky top-10 z-50 md:w-full h-0">
+      
+      <div className="mx-auto md:max-w-5xl max-sm:inline rounded-2xl border-2 border-white/30 
+                      bg-white/20 backdrop-blur-md 
+                      shadow-[4px_4px_0px_#000] px-6 py-3 md:flex md:items-center md:justify-between max-sm:ml-5 ">
         
-        {/* Desktop Navigation */}
-        <NavigationMenu className="hidden md:flex">
-          <NavigationMenuList className="flex space-x-3 bg-gradient-to-r from-sky-400/20 via-cyan-400/20 to-emerald-400/20 backdrop-blur-md rounded-lg px-4 py-2 shadow-sm">
-            {navLinks.map((link) => (
-              <NavigationMenuItem key={link.href}>
-                <NavigationMenuLink asChild>
-                  <Link
-                    href={link.href}
-                    className="rounded-md px-4 py-2 text-black font-medium hover:bg-white/20"
-                  >
-                    {link.label}
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            ))}
-            <NavigationMenuItem>
-              <Button
-                asChild
-                className="rounded-md bg-gradient-to-r from-teal-500 to-cyan-500 text-white font-bold hover:from-teal-600 hover:to-cyan-600"
-              >
-                <Link href="#contact">Contact Me</Link>
-              </Button>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
 
-        {/* Mobile Navigation */}
-        <div className="md:hidden">
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" aria-label="Toggle menu" className="text-black">
-                <Menu className="h-6 w-6" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="border-l border-white/10">
-              <div className="mt-6 flex flex-col space-y-2 bg-gradient-to-r from-sky-400/20 via-cyan-400/20 to-emerald-400/20 backdrop-blur-md rounded-lg p-4">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="rounded-md px-4 py-2 text-black transition-colors hover:bg-white/20"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-                <Button
-                  asChild
-                  className="rounded-md bg-gradient-to-r from-teal-500 to-cyan-500 w-full text-white font-bold hover:from-teal-600 hover:to-cyan-600"
-                >
-                  <Link href="#contact">Contact Me</Link>
-                </Button>
-              </div>
-            </SheetContent>
-          </Sheet>
-        </div>
+
+        <nav className="hidden md:flex justify-center gap-8 font-extrabold text-slate-900 text-lg mx-auto">
+          {[
+            { name: "Home", href: "#home" },
+            { name: "About", href: "#about" },
+            { name: "Blogs", href: "#blog" },
+            { name: "Projects", href: "#projects" },
+          ].map((item, idx) => (
+            <Link
+              key={idx}
+              href={item.href}
+              className="relative px-2 py-1 transition-colors hover:text-[#4F39F6]  "
+            >
+              {item.name}
+            </Link>
+          ))}
+        </nav>
+
+
+
+
+
+
+        <button
+          onClick={() => setOpen(true)}
+          className="md:hidden font-extrabold text-slate-900 "
+        >
+          ☰
+        </button>
       </div>
+
+
+
+
+
+
+
+{/* sheet */}
+      {open && (
+        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex">
+          <div className="w-64 bg-white/90 border-r-4 border-slate-900 shadow-[6px_0_0_#000] p-6 flex flex-col gap-6">
+            <button
+              onClick={() => setOpen(false)}
+              className="self-end font-bold text-slate-900"
+            >
+              ✕
+            </button>
+            {[
+            { name: "Home", href: "#home" },
+            { name: "About", href: "#about" },
+            { name: "Blogs", href: "#blog" },
+            { name: "Projects", href: "#projects" },
+          ].map((item, idx) => (
+              <Link
+                key={idx}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className="block font-extrabold text-lg text-slate-900 hover:text-pink-700"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+          {/* Click outside to close */}
+          <div className="flex-1" onClick={() => setOpen(false)} />
+        </div>
+      )}
     </header>
   )
 }
-
-export default Header

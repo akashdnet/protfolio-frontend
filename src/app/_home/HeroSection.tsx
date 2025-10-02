@@ -5,9 +5,9 @@ const HeroSection = () => {
   return (
     <section
       id="home"
-      className="relative flex min-h-screen items-center bg-gradient-to-br from-sky-50 via-emerald-50 to-indigo-50 overflow-hidden"
+      className=" flex min-h-screen items-center bg-gradient-to-br from-sky-50 via-emerald-50 to-indigo-50 overflow-hidden pt-10 "
     >
-      <div className="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-sky-200/40 blur-3xl animate-pulse" />
+      <div className="absolute -top-0 -left-24 h-80 w-80 rounded-full bg-sky-200 blur-3xl animate-pulse" />
       <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-emerald-200/40 blur-3xl animate-bounce" />
 
       <div className="container mx-auto max-w-6xl grid  grid-cols-1 items-center gap-12 px-6 py-20 md:grid-cols-2">
@@ -76,7 +76,7 @@ const HeroSection = () => {
 }
 
 const me: Bio = {
-  name: "Abdullah",
+  name: "MD Imtiaz Khondoker Akash",
   vibe: "calm",
   stack: [ "C++", "Javascript", "Typescript", 
             "Rect.js", "Next.js", 

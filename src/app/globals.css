@@ -128,4 +128,5 @@ body {
 
 html, body {
   /* @apply min-h-screen bg-gradient-to-br from-sky-200 via-cyan-200 to-emerald-200; */
+  /* background-color: #EDF8FA; */
 }
