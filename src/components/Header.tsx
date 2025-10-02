@@ -7,7 +7,7 @@ export default function Header() {
   const [open, setOpen] = useState(false)
 
   return (
-    <header className="sticky top-10 z-50 md:w-full h-0">
+    <header className="sticky md:top-3 top-10 z-50 md:w-full h-0">
       
       <div className="mx-auto md:max-w-5xl max-sm:inline rounded-2xl border-2 border-white/30 
                       bg-white/20 backdrop-blur-md 
