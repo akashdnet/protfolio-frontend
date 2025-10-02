@@ -10,8 +10,8 @@ const HeroSection = () => {
       <div className="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-sky-200/40 blur-3xl animate-pulse" />
       <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-emerald-200/40 blur-3xl animate-bounce" />
 
-      <div className="container mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 py-20 md:grid-cols-2">
-        <div className="order-2 text-center md:order-1 md:text-left">
+      <div className="container mx-auto max-w-6xl grid  grid-cols-1 items-center gap-12 px-6 py-20 md:grid-cols-2">
+        <div className=" text-center md:order-1 md:text-left">
           <span className="inline-block rounded-full bg-indigo-100 px-4 py-1 text-sm font-semibold text-indigo-700 shadow">
             <Code2Icon className="inline mr-2" /> Passionate Programmer
           </span>
@@ -58,7 +58,7 @@ const HeroSection = () => {
           </div>
         </div>
 
-        <div className="order-1 md:order-2 flex justify-center">
+        <div className=" md:order-2 flex justify-center">
           <div className="relative w-full max-w-md rounded-3xl border border-slate-200 bg-white/80 shadow-xl backdrop-blur-xl p-6">
             <div className="absolute -top-6 -left-6 h-14 w-14 rotate-6 rounded-xl bg-indigo-200 shadow-[3px_3px_0px_#475569]" />
             <div className="absolute -bottom-6 -right-6 h-16 w-16 -rotate-6 rounded-full bg-emerald-200 shadow-[3px_3px_0px_#94a3b8]" />

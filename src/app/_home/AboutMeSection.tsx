@@ -11,10 +11,10 @@ const AboutMe = () => {
     >
 
 
-      <div className="absolute top-10 left-10 h-10 w-10 rounded-full bg-pink-300 shadow-[3px_3px_0px_#000] animate-bounce z-0" />
+      <div className="absolute md:top-1/10 top-10 left-1/10 h-10 w-10 rounded-full bg-pink-300 shadow-[3px_3px_0px_#000] animate-bounce z-0" />
       <div className="absolute bottom-20 right-16 h-12 w-12 rotate-45 bg-yellow-300 shadow-[3px_3px_0px_#000] animate-pulse z-0" />
-      <div className="absolute top-1/3 right-1/4 h-0 w-0 border-l-[20px] border-r-[20px] border-b-[35px] border-l-transparent border-r-transparent border-b-indigo-400 shadow-[2px_2px_0px_#000] animate-spin-slow z-0" />
-      <div className="absolute bottom-10 left-1/3 h-8 w-20 bg-emerald-300 skew-x-12 shadow-[2px_2px_0px_#000] animate-pulse z-0" />
+      <div className="absolute md:top-1/3 right-1/4 h-0 w-0 border-l-[20px] border-r-[20px] border-b-[35px] border-l-transparent border-r-transparent border-b-indigo-400 shadow-[2px_2px_0px_#000] animate-spin-slow z-0" />
+      <div className="absolute bottom-14 md:left-1/3 left-9/12 h-8 w-20 bg-emerald-300 skew-x-12 shadow-[2px_2px_0px_#000] animate-pulse z-0" />
 
 
 
@@ -61,7 +61,7 @@ const AboutMe = () => {
                 />
               </div>
               <h3 className="mt-4 text-2xl font-extrabold text-slate-900 drop-shadow-[2px_2px_0px_#a5b4fc]">
-                Abdullah
+                MD Imtiaz Khondoker Akash
               </h3>
               <p className="text-indigo-500/70 font-semibold">Full‑Stack Developer</p>
 
