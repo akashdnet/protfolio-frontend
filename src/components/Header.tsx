@@ -26,7 +26,7 @@ const Header: React.FC = () => {
   ]
 
   return (
-    <header className="sticky top-0 z-50 w-full shadow-md">
+    <header className="sticky top-0 z w-full bg-transparent backdrop-blur-md shadow-md">
       <div className="container mx-auto max-w-5xl flex items-center justify-center px-6 md:px-8 py-4">
         
         {/* Desktop Navigation */}
@@ -38,7 +38,6 @@ const Header: React.FC = () => {
                   <Link
                     href={link.href}
                     className="rounded-md px-4 py-2 text-black font-medium hover:bg-white/20"
-
                   >
                     {link.label}
                   </Link>
@@ -50,7 +49,7 @@ const Header: React.FC = () => {
                 asChild
                 className="rounded-md bg-gradient-to-r from-teal-500 to-cyan-500 text-white font-bold hover:from-teal-600 hover:to-cyan-600"
               >
-                <Link href="#">Contact Me</Link>
+                <Link href="#contact">Contact Me</Link>
               </Button>
             </NavigationMenuItem>
           </NavigationMenuList>
@@ -60,7 +59,7 @@ const Header: React.FC = () => {
         <div className="md:hidden">
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" aria-label="Toggle menu" className="text-white">
+              <Button variant="ghost" size="icon" aria-label="Toggle menu" className="text-black">
                 <Menu className="h-6 w-6" />
               </Button>
             </SheetTrigger>
@@ -70,7 +69,7 @@ const Header: React.FC = () => {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="rounded-md px-4 py-2 text-white transition-colors hover:bg-white/20"
+                    className="rounded-md px-4 py-2 text-black transition-colors hover:bg-white/20"
                   >
                     {link.label}
                   </Link>
@@ -79,7 +78,7 @@ const Header: React.FC = () => {
                   asChild
                   className="rounded-md bg-gradient-to-r from-teal-500 to-cyan-500 w-full text-white font-bold hover:from-teal-600 hover:to-cyan-600"
                 >
-                  <Link href="#about">Contact Me</Link>
+                  <Link href="#contact">Contact Me</Link>
                 </Button>
               </div>
             </SheetContent>
