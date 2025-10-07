@@ -1,4 +1,4 @@
-
+"use client"
 import { TProject } from "@/action/projectAction";
 import Image from "next/image";
 import Link from "next/link";

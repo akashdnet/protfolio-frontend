@@ -21,11 +21,6 @@ interface CreateDataProps {
   image: any;
 }
 
-interface GatDataProps {
-  page: number;
-  limit: number;
-  term: string;
-}
 
 export interface TMeta {
   page: number;

@@ -1,17 +1,12 @@
+"use client"
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 
 
-interface TBlog {
-  _id: string
-  thumbnail?: string
-  title: string
-  description: string
-  categories: string[]
-  isPublished: boolean
-}
+
 
 
 
@@ -34,7 +29,7 @@ export const projectSchema = z.object({
 
 export type ProjectFormValues = z.infer<typeof projectSchema>;
 
-export const rhForm = (initialData?: Partial<ProjectFormValues>) => {
+export const useRhForm = (initialData?: Partial<ProjectFormValues>) => {
   return useForm<ProjectFormValues>({
     resolver: zodResolver(projectSchema),
     defaultValues: {

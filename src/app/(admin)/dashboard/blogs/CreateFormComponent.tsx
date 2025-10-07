@@ -1,3 +1,4 @@
+"use client"
 import { createBlogData, editBlogData, TBlog } from "@/action/blogAction"
 import ArrayInputFieldComponent from "@/components/ArrayInputFieldComponent"
 import FormFooterButtons from "@/components/FormFooterButtons"
@@ -6,7 +7,7 @@ import TextInputFieldComponent from "@/components/TextInputFieldComponent"
 
 import { Form } from "@/components/ui/form"
 import { useState } from "react"
-import { rhForm } from "./formValidation"
+import { useRhForm as rhForm} from "./formValidation"
 import EditorInputFieldComponent from "@/components/EditorInputFieldComponent"
 import withErrorHandler from "@/utils/withErrorHandler"
 

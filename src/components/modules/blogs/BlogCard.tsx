@@ -14,8 +14,8 @@ export default function BlogCard({blogs}:{blogs:TBlog[]}) {
             >
               <div className="relative h-48 w-full border-b-4 border-slate-900">
                 <Image
-                  src={blog?.thumbnail!}
-                  alt={blog.title}
+                  src={blog?.thumbnail || ""}
+                  alt={blog?.title || ""}
                   fill
                   className="object-cover"
                 />

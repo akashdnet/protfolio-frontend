@@ -1,4 +1,4 @@
-
+"use client"
 import ArrayInputFieldComponent from "@/components/ArrayInputFieldComponent"
 import FormFooterButtons from "@/components/FormFooterButtons"
 import ImageInputFieldComponent from "@/components/ImageInputFieldComponent"
@@ -6,7 +6,7 @@ import TextInputFieldComponent from "@/components/TextInputFieldComponent"
 
 import { Form } from "@/components/ui/form"
 import { useState } from "react"
-import { rhForm } from "./formValidation"
+import { useRhForm as rhForm } from "./formValidation"
 import TextareaInputField from "@/components/TextareaInputField"
 import EditorInputFieldComponent from "@/components/EditorInputFieldComponent"
 import toast from "react-hot-toast"

@@ -6,6 +6,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 
 export default function ArrayInputFieldComponent({ form, name, label }: { form: any, name: string, label: string }) {
+  const [tagInput, setTagInput] = useState("");
   return (
     <>
     
@@ -14,7 +15,6 @@ export default function ArrayInputFieldComponent({ form, name, label }: { form: 
           control={form.control}
           name={name}
           render={({ field }) => {
-            const [tagInput, setTagInput] = useState("");
 
             const addTag = () => {
               if (tagInput.trim() !== "") {
