@@ -1,8 +1,13 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export function middleware(req: NextRequest) {
-  const token = req.cookies.get("access_token")?.value;
+import { cookies } from 'next/headers'
+
+export async function middleware(req: NextRequest) {
+  const cookieStore = await cookies()
+  
+  const token = cookieStore?.get('access_token')
+  // const token = req.cookies.get("access_token")?.value;
   const { pathname } = req.nextUrl;
 
   console.log(`middleware token: `,token)
