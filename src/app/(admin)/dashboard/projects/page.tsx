@@ -1,34 +1,15 @@
-"use client";
+import React from 'react'
+import TableComponent from './TableComponent'
+import { TopSection } from './TopSection'
 
-import * as React from "react"
-import { TableComponent } from "./TableComponent";
-import { TopSection } from "./TopSection";
-
-export default function Page() {
-  const [items, setItems] = React.useState<any[]>([]);
-
-  const handleEdit = (item: any) => {
-    console.log("Edit:", item);
-  };
-
-  const handleDelete = (item: any) => {
-    setItems((prev) => prev.filter((i) => i.id !== item.id));
-  };
+export default async function page({searchParams}:any) {
+  const queries = await searchParams
 
   return (
-
-
-
-
-
-    <div className="p-6">
-
-      <h1 className="text-center text-3xl font-semibold ">Project List</h1>
-
-      <TopSection/>
-
-
-      <TableComponent/>
-    </div>
-  );
+    <main className='min-h-screen p-5 space-y-20 w-5xl mx-auto  '>
+        <h1 className='text-center text-4xl font-bold '>Project Management</h1>
+        <TopSection/>
+        <TableComponent queries={queries}/>
+    </main>
+  )
 }

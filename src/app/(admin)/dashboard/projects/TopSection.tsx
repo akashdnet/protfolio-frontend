@@ -6,9 +6,11 @@ import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { DialogComponent } from "./DialogComponent";
 import { Edit2 } from "lucide-react";
-import ProjectForm from "./ProjectForm";
+import { CreateDialogComponent } from "./CreateDialogComponent";
 
 export function TopSection() {
+  
+
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -19,14 +21,18 @@ export function TopSection() {
     if (term.trim() === "") {
       params.delete("term");
     } else {
+      params.delete("page");
       params.set("term", term);
     }
     router.push("?" + params.toString());
   };
 
-  const handleCreate = (data: any) => {
-    console.log("Created project:", data);
-  };
+
+
+  const handleCreate = async ({data, image}:any)=> {
+    // await 
+    // await fetchNewData()
+  }
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -35,8 +41,12 @@ export function TopSection() {
     return () => clearTimeout(handler);
   }, [searchTerm]);
 
+
+
+
+
   return (
-    <div className="flex items-center justify-between w-full mb-4">
+    <div className="flex items-center justify-between mx-auto w-full mb-4">
 
 
       <div>
@@ -52,26 +62,8 @@ export function TopSection() {
 
 
 
-
-      <DialogComponent
-        title="Create Project"
-        buttonText={
-          <Button variant="outline" size="sm" className="flex items-center gap-2">
-            <Edit2 className="w-4 h-4" /> Create Project
-          </Button>
-        }
-      >
-        <ProjectForm
-          initialData={{ title: "" }}
-          onSubmit={handleCreate}
-        />
-
-
-
         
-      </DialogComponent>
-
-
+      <CreateDialogComponent  />
 
     </div>
   );

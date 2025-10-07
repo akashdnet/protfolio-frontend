@@ -1,0 +1,128 @@
+'use client';
+
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+
+const loginSchema = z.object({
+  email: z.email('Invalid email'),
+  password: z.string().min(4, 'Password must be at least 4 characters'),
+});
+
+
+type TLoginFormData = z.infer<typeof loginSchema>;
+
+import {
+  Card, CardContent, CardHeader, CardTitle,
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import toast from 'react-hot-toast';
+// import { revalidatePath } from 'next/cache';
+
+
+
+export default function LoginPage() {
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+
+
+
+
+  const form = useForm<TLoginFormData>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: { email: '', password: '' },
+  });
+
+
+
+
+
+
+  const onSubmit = async (data: TLoginFormData) => {
+    const toastId = toast.loading('Logging in...');
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+        credentials: 'include',  
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        toast.error(errorData.message || 'Login failed', { id: toastId });
+        throw new Error(errorData.message || 'Login failed');
+      }
+
+      toast.success('Login successful!', { id: toastId });  
+      // revalidatePath("/")    
+      router.replace('/dashboard/blogs');
+
+    } catch (err: any) {
+      setError(err.message);
+      toast.error(err.message, { id: toastId });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+
+
+      <Card className="w-md">
+        <CardHeader>
+          <CardTitle>Login</CardTitle>
+          {/* <CardDescription>Enter your credentials.</CardDescription> */}
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="username@email.com" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input type="password" placeholder="your password" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {error && <p className="text-red-500 text-sm">{error}</p>}
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? 'Logging in...' : 'Login'}
+              </Button>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}

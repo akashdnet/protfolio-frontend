@@ -2,22 +2,21 @@
 
 import { useState, useCallback, useRef } from "react"
 
-interface FileWithPreview {
+interface SingleFileWithPreview {
   id: string
   file: File
   preview: string
 }
 
-interface UseFileUploadOptions {
+interface UseSingleFileUploadOptions {
   accept?: string
   maxSize?: number
-  multiple?: boolean
 }
 
-export function useFileUpload(options: UseFileUploadOptions = {}) {
-  const { accept = "*", maxSize = 5 * 1024 * 1024, multiple = false } = options
+export function useSingleFileUpload(options: UseSingleFileUploadOptions = {}) {
+  const { accept = "image/*", maxSize = 5 * 1024 * 1024 } = options
   
-  const [files, setFiles] = useState<FileWithPreview[]>([])
+  const [file, setFile] = useState<SingleFileWithPreview | null>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [errors, setErrors] = useState<string[]>([])
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -36,28 +35,26 @@ export function useFileUpload(options: UseFileUploadOptions = {}) {
     return null
   }, [accept, maxSize])
 
-  const processFiles = useCallback((fileList: FileList) => {
-    const newErrors: string[] = []
-    const validFiles: FileWithPreview[] = []
-
-    Array.from(fileList).forEach(file => {
-      const error = validateFile(file)
-      if (error) {
-        newErrors.push(error)
-      } else {
-        const id = Math.random().toString(36).substr(2, 9)
-        const preview = URL.createObjectURL(file)
-        validFiles.push({ id, file, preview })
-      }
-    })
-
-    setErrors(newErrors)
-    if (multiple) {
-      setFiles(prev => [...prev, ...validFiles])
+  const processFile = useCallback((fileList: FileList) => {
+    if (fileList.length === 0) return
+    
+    const selectedFile = fileList[0]
+    const error = validateFile(selectedFile)
+    
+    if (error) {
+      setErrors([error])
+      setFile(null)
     } else {
-      setFiles(validFiles.slice(0, 1))
+      if (file) {
+        URL.revokeObjectURL(file.preview)
+      }
+      
+      setErrors([])
+      const id = Math.random().toString(36).substr(2, 9)
+      const preview = URL.createObjectURL(selectedFile)
+      setFile({ id, file: selectedFile, preview })
     }
-  }, [validateFile, multiple])
+  }, [validateFile, file])
 
   const handleDragEnter = useCallback((e: React.DragEvent) => {
     e.preventDefault()
@@ -66,7 +63,8 @@ export function useFileUpload(options: UseFileUploadOptions = {}) {
 
   const handleDragLeave = useCallback((e: React.DragEvent) => {
     e.preventDefault()
-    if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+    const relatedTarget = e.relatedTarget as Node | null;
+    if (!relatedTarget || !e.currentTarget.contains(relatedTarget)) {
       setIsDragging(false)
     }
   }, [])
@@ -81,38 +79,46 @@ export function useFileUpload(options: UseFileUploadOptions = {}) {
     
     const droppedFiles = e.dataTransfer.files
     if (droppedFiles.length > 0) {
-      processFiles(droppedFiles)
+      processFile(droppedFiles)
     }
-  }, [processFiles])
+  }, [processFile])
 
   const openFileDialog = useCallback(() => {
     fileInputRef.current?.click()
   }, [])
 
-  const removeFile = useCallback((fileId: string) => {
-    setFiles(prev => {
-      const fileToRemove = prev.find(f => f.id === fileId)
-      if (fileToRemove) {
-        URL.revokeObjectURL(fileToRemove.preview)
-      }
-      return prev.filter(f => f.id !== fileId)
-    })
-  }, [])
+  const removeFile = useCallback(() => {
+    if (file) {
+      URL.revokeObjectURL(file.preview)
+      setFile(null)
+    }
+    setErrors([])
+  }, [file])
+
+  const clearAll = useCallback(() => {
+    if (file) {
+      URL.revokeObjectURL(file.preview)
+    }
+    setFile(null)
+    setErrors([])
+  }, [file])
 
   const getInputProps = useCallback(() => ({
     ref: fileInputRef,
-    type: "file" as const,
+    type: "file",
     accept,
-    multiple,
+    multiple: false, 
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.files && e.target.files.length > 0) {
-        processFiles(e.target.files)
+        processFile(e.target.files)
       }
+
+      e.target.value = ""
     }
-  }), [accept, multiple, processFiles])
+  }), [accept, processFile])
 
   return [
-    { files, isDragging, errors },
+    { file, isDragging, errors },
     {
       handleDragEnter,
       handleDragLeave,
@@ -120,6 +126,7 @@ export function useFileUpload(options: UseFileUploadOptions = {}) {
       handleDrop,
       openFileDialog,
       removeFile,
+      clearAll,
       getInputProps,
     }
   ] as const

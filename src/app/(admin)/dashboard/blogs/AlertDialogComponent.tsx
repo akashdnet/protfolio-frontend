@@ -1,4 +1,3 @@
-"use client";
 
 import {
   AlertDialog,
@@ -10,36 +9,31 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+} from "@/components/ui/alert-dialog"
+import { Button } from "@/components/ui/button"
+import { RiDeleteBin6Fill } from "react-icons/ri"
 
-interface AlertDialogComponentProps {
-  buttonText: React.ReactNode;
-  title: string;
-  description: string;
-  onConfirm: () => void;
-}
-
-export function AlertDialogComponent({
-  buttonText,
-  title,
-  description,
-  onConfirm,
-}: AlertDialogComponentProps) {
+export function AlertDialogComponent({onContinue}:{onContinue:()=>void}) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        {buttonText}
+        <Button variant="destructive" className="inline"><RiDeleteBin6Fill /></Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>{title}</AlertDialogTitle>
-          <AlertDialogDescription>{description}</AlertDialogDescription>
+          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogDescription>
+            This action cannot be undone. This will permanently delete your
+            account and remove your data from our servers.
+          </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={onConfirm}>Delete</AlertDialogAction>
+          <AlertDialogAction onClick={onContinue} >Continue</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  );
+  )
 }
+
+export default AlertDialogComponent

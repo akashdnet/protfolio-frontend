@@ -1,3 +1,4 @@
+"use client"
 import * as React from "react"
 import { GalleryVerticalEnd } from "lucide-react"
 
@@ -15,6 +16,8 @@ import {
 } from "@/components/ui/sidebar"
 import Link from "next/link"
 import { Button } from "./ui/button"
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast"
 
 // This is sample data.
 const data = {
@@ -27,16 +30,47 @@ const data = {
       title: "Blogs",
       url: "/dashboard/blogs",
     },
-    {
-      title: "Login",
-      url: "/dashboard/login",
-    },
+    // {
+    //   title: "Login",
+    //   url: "/login",
+    // },
+    
     
 
   ],
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const router = useRouter();
+
+
+  const logout = async () => {
+    const toastId = toast.loading("Logging out...");
+
+    try {
+      const res =await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
+      method: "POST",
+      credentials: "include",
+    })
+    const data = await res.json()
+    
+    if (data.success) {
+      toast.success("Logged out successfully!", { id: toastId });   
+      router.refresh();   
+      router.push("/"); 
+    }else{
+      toast.error(`Error logging out: ${data.message}`, { id: toastId });
+    }
+      
+    } catch (error:any) {
+      console.log(error)
+      toast.error(`Error logging out: ${error.message}`, { id: toastId });
+
+    }
+
+  }
+
+
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -61,11 +95,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
       <SidebarFooter>
         <div className="p-1 mx-auto">
-          {/* <SidebarOptInForm /> */}
-          <Button variant="destructive">Logout</Button>
+          <Button variant="destructive" onClick={logout} >Logout</Button>
         </div>
       </SidebarFooter>
-      {/* <SidebarRail /> */}
     </Sidebar>
   )
 }

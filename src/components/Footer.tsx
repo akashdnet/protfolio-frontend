@@ -7,7 +7,10 @@ export default function Footer() {
     <footer
       className=" bg-gradient-to-br from-sky-100 via-emerald-100 to-indigo-100 
                  shadow-[0_-6px_0px_#000]
-                 border-t-4 border-slate-900"
+                 border-t-4 border-slate-900
+                 mt-10
+                 "
+                 
     >
       <div className="container mx-auto max-w-6xl px-6 py-12">
 

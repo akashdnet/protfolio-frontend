@@ -5,7 +5,7 @@ const HeroSection = () => {
   return (
     <section
       id="home"
-      className=" flex min-h-screen items-center bg-gradient-to-br from-sky-50 via-emerald-50 to-indigo-50 overflow-hidden pt-10 "
+      className=" flex min-h-screen items-center bg-gradient-to-br from-sky-50 via-emerald-50 to-indigo-50 overflow-hidden -top-10"
     >
       <div className="absolute -top-0 -left-24 h-80 w-80 rounded-full bg-sky-200 blur-3xl animate-pulse" />
       <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-emerald-200/40 blur-3xl animate-bounce" />

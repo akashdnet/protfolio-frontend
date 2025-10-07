@@ -5,7 +5,6 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
-import { Separator } from "@/components/ui/separator";
 
 
 export const metadata: Metadata = {
@@ -23,10 +22,10 @@ export default function RootLayout({
       <SidebarProvider>
         <AppSidebar />
         <SidebarInset>
-           <div className=" z-50 h-0">
-      <SidebarTrigger size="sm" />
-    </div>
-          
+          <div className=" z-50 h-0">
+            <SidebarTrigger size="sm" />
+          </div>
+
           {children}
         </SidebarInset>
       </SidebarProvider>

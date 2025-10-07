@@ -5,19 +5,31 @@ import { useState } from "react"
 
 
 
-const navList = [
-            { name: "Home", href: "#home" },
-            { name: "About", href: "#about" },
-            { name: "Blogs", href: "#blog" },
-            { name: "Projects", href: "#projects" },
-            { name: "Dashboard", href: "/dashboard" },
-          ]
 
-export default function Header() {
+export default function Header({ isAuthenticated }: { isAuthenticated: boolean }) {
   const [open, setOpen] = useState(false)
 
+
+
+
+
+const navList = [
+            { name: "Home", href: "/#home" },
+            { name: "About", href: "/#about" },
+            { name: "Blogs", href: "/#blog" },
+            { name: "Projects", href: "/#projects" },
+            isAuthenticated ? { name: "Dashboard", href: "/dashboard/blogs" } : { name: "Login", href: "/login" },
+          ]
+
+
+
+
+
+
+  
+
   return (
-    <header className="sticky md:top-3 top-10 z-50 md:w-full h-0">
+    <header className="sticky md:top-3 md: mb-8 top-10 z-50 md:w-full ">
       
       <div className="mx-auto md:max-w-5xl max-sm:inline rounded-2xl border-2 border-white/30 
                       bg-white/20 backdrop-blur-md 

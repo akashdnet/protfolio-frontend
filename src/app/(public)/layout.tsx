@@ -1,34 +1,30 @@
-import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
-import "../globals.css";
 import Footer from '@/components/Footer';
 import Header from "@/components/Header";
-
-const montserrat = Montserrat({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import ServerHeader from '@/components/ServerHeader';
 
 
-export const metadata: Metadata = {
-  title: "Md Imtiaz Khondoker Akash",
-  description: "Full Stack Web Developer. Skill : Javascript, Typescript, React.js, Next.js, Node.js, Express.js",
-};
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
+
+
+
+
+
   return (
-    <html lang="en">
-      <body
-        className={`${montserrat.className} antialiased`}
-      >
-        <Header/>
+    
+      <main className='min-h-screen flex flex-col w-full'>
+        <ServerHeader/>
+        <div className="container mx-auto md:w-6xl flex-1">
         {children}
+        </div>
         <Footer/>
-      </body>
-    </html>
+      </main>
+    
   );
 }

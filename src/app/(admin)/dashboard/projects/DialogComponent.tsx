@@ -1,66 +1,52 @@
-"use client";
 
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import { Edit2 } from "lucide-react";
 import { useState } from "react";
+import FormComponent from "./EditFormComponent";
+import { TProject } from "@/action/projectAction";
 
-interface DialogComponentProps {
-  children: React.ReactNode;
-  buttonText: React.ReactNode;
-  title: string;
-  description?: string;
-  onSave?: () => void; 
+interface TProps {
+  data: TProject;
+  dialogHeader?: string;
+  continueButtonTitle?: string;
 }
 
 export function DialogComponent({
-  children,
-  buttonText,
-  title,
-  description,
-  onSave,
-}: DialogComponentProps) {
+  data,
+  dialogHeader = "Form",
+  continueButtonTitle = "Save",
+}: TProps) {
   const [open, setOpen] = useState(false);
 
-  const handleSave = () => {
-    if (onSave) onSave();
+  const handleClose = () => {
     setOpen(false);
   };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>{buttonText}</DialogTrigger>
-      <DialogContent className="sm:max-w-[600px] h-3/4 overflow-y-auto">
+      <DialogTrigger asChild >
+        <Button variant="outline">
+          <Edit2 />
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px] max-h-2/3 overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-          {description && <DialogDescription>{description}</DialogDescription>}
+          <DialogTitle>{dialogHeader}</DialogTitle>
+          <DialogDescription>
+            Make changes to your profile here. Click {continueButtonTitle} when
+            you&apos;re done.
+          </DialogDescription>
         </DialogHeader>
 
-        {children}
-
-        <DialogFooter className="flex gap-2">
-          <DialogClose asChild>
-            <Button variant="outline" className="flex-1">
-              Cancel
-            </Button>
-          </DialogClose>
-          <Button
-            type="submit"
-            form="project-form"
-            className="flex-1"
-            onClick={handleSave}
-          >
-            Save
-          </Button>
-        </DialogFooter>
+        <FormComponent onHandleClose={handleClose} initialData={data} />
       </DialogContent>
     </Dialog>
   );
