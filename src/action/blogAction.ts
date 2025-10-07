@@ -60,7 +60,7 @@ export const getBlogData = async ({page = 1,limit = 5,term = "",}: FetchOptions)
   console.log(`ddd`,queryParams)
 
   const url = `${process.env.NEXT_PUBLIC_API_URL}/blog/all-blogs?${queryParams.toString()}`;
-  console.log(`url`, url)
+  // console.log(`url`, url)
 
   try {
     const res = await fetch(url, {

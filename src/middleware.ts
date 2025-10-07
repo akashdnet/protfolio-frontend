@@ -5,6 +5,8 @@ export function middleware(req: NextRequest) {
   const token = req.cookies.get("access_token")?.value;
   const { pathname } = req.nextUrl;
 
+  console.log(`middleware token: `,token)
+
   // console.log("MIDDLEWARE HIT:", pathname, "TOKEN:", token);
 
   if (pathname.startsWith("/dashboard") || pathname.startsWith("/dashboard/blogs") || pathname.startsWith("/dashboard/projects")){
