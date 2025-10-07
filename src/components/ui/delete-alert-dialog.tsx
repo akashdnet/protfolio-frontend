@@ -12,6 +12,7 @@ import {
 import { Trash2 } from "lucide-react";
 import { Button } from "./button";
 
+// @typescript-eslint/no-explicit-any
 export function DeleteAlertDialog({ onDelete, item }: any) {
   return (
     <AlertDialog>
