@@ -65,12 +65,30 @@ const handleSubmit = async (data:any) => {
         />
 
 
+        <TextInputFieldComponent
+          form={form}
+          name="projectLink"
+          label="Project Link"
+        />
+
+
+
+
+        <TextInputFieldComponent
+          form={form}
+          name="liveSite"
+          label="Live Site"
+        />
+
+
+
 
        <ArrayInputFieldComponent
           form={form}
           name="features"
           label="Features"
         />
+
 
 
 

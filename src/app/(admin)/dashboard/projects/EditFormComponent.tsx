@@ -47,55 +47,73 @@ const handleSubmit = async (data:any) => {
 
   return (
     <div >
-        <Form {...form}>
-      <form
-        id="project-form"
-        onSubmit={form.handleSubmit(handleSubmit)}
-        className="space-y-9"
-      >
-        {/* title */}
-                {/* thumbnail */}
-        <ImageInputFieldComponent
-          label="Thumbnail"
-          imageLink={initialData?.thumbnail}
-          setFile={setFile}
-        />
-
-        <TextInputFieldComponent
-          form={form}
-          name="title"
-          label="Project Title"
-        />
-
-
-
-       <ArrayInputFieldComponent
-          form={form}
-          name="features"
-          label="Features"
-        />
-
-
-
-
-        {/* description */}
-
-        <EditorInputFieldComponent
-          form={form}
-          name="description"
-          label="Description"
-        />
-
-
-
-
- 
-
-
-
-        <FormFooterButtons loading={loading} onHandleClose={onHandleClose} handleSubmit={()=>{handleSubmit}} continueButtonTitle={continueButtonTitle} />
-      </form>
-    </Form>
+       <Form {...form}>
+             <form
+               id="project-form-2"
+               onSubmit={form.handleSubmit(handleSubmit)}
+               className="space-y-9"
+             >
+               {/* title */}
+                       {/* thumbnail */}
+               <ImageInputFieldComponent
+                 label="Thumbnail"
+                 imageLink={initialData?.thumbnail}
+                 setFile={setFile}
+               />
+       
+               <TextInputFieldComponent
+                 form={form}
+                 name="title"
+                 label="Project Title"
+               />
+       
+       
+               <TextInputFieldComponent
+                 form={form}
+                 name="projectLink"
+                 label="Project Link"
+               />
+       
+       
+       
+       
+               <TextInputFieldComponent
+                 form={form}
+                 name="liveSite"
+                 label="Live Site"
+               />
+       
+       
+       
+       
+              <ArrayInputFieldComponent
+                 form={form}
+                 name="features"
+                 label="Features"
+               />
+       
+       
+       
+       
+       
+               {/* description */}
+       
+               <EditorInputFieldComponent
+                 form={form}
+                 name="description"
+                 label="Description"
+               />
+       
+       
+       
+       
+        
+       
+       
+       
+               <FormFooterButtons loading={loading} onHandleClose={onHandleClose} handleSubmit={()=>{handleSubmit}} continueButtonTitle={continueButtonTitle} />
+             </form>
+           </Form>
     </div>
   )
 }

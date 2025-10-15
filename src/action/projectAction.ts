@@ -99,6 +99,15 @@ export const getProjectData = async ({page = 1,limit = 5,term = "",}: FetchOptio
 
 
 export const createProjectData = async ({ data, image }: CreateDataProps) => {
+
+
+   const cookieStore = await cookies()
+    const cookiesOptions= {
+    access_token: cookieStore.get('access_token')?.value,
+    refresh_token: cookieStore.get('refresh_token')?.value,
+  }
+
+  
   const formData = new FormData();
   formData.append("data", JSON.stringify(data));
   if (image) {
@@ -112,6 +121,9 @@ export const createProjectData = async ({ data, image }: CreateDataProps) => {
       method: "POST",
       body: formData,
       credentials: "include",
+      headers: {
+        Cookie: `access_token=${cookiesOptions.access_token}; refresh_token=${cookiesOptions.refresh_token}`
+      },
     });
 
     const result = await res.json();

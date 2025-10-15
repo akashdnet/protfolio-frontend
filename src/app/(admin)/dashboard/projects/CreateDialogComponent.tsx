@@ -40,7 +40,7 @@ export function CreateDialogComponent({
         <DialogHeader>
           <DialogTitle>{dialogHeader}</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click {continueButtonTitle} when
+            Make changes to your data here. Click {continueButtonTitle} when
             you&apos;re done.
           </DialogDescription>
         </DialogHeader>

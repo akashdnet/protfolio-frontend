@@ -5,8 +5,8 @@ export default async function ServerHeader() {
   const cookieStore = await cookies()
   const token = cookieStore?.get('access_token')
   // console.log(`🔥server component rendered: 
-  //   TNAME:${token?.name}  
-  //   TVALUE:${token?.value}`)
+  //   TokenName:${token?.name}  
+  //   TokenValue:${token?.value}`)
 
   const hasToken = token?.name ? true : false
   

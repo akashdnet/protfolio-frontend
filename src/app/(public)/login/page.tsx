@@ -5,15 +5,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-
-const loginSchema = z.object({
-  email: z.email('Invalid email'),
-  password: z.string().min(4, 'Password must be at least 4 characters'),
-});
-
-
-type TLoginFormData = z.infer<typeof loginSchema>;
-
 import {
   Card, CardContent, CardHeader, CardTitle,
 } from '@/components/ui/card';
@@ -21,58 +12,49 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import toast from 'react-hot-toast';
-// import { revalidatePath } from 'next/cache';
+import { loginAction } from '@/action/auth.action';
 
+const loginSchema = z.object({
+  email: z.email('Invalid email'),
+  password: z.string().min(4, 'Password must be at least 4 characters'),
+});
 
+type TLoginFormData = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-
-
-
-
   const form = useForm<TLoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: '', password: '' },
   });
 
-
-
-
-
-
   const onSubmit = async (data: TLoginFormData) => {
     const toastId = toast.loading('Logging in...');
-
     setIsLoading(true);
     setError(null);
 
     try {
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-        credentials: 'include',  
-      });
+      const result = await loginAction(data.email, data.password);
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        toast.error(errorData.message || 'Login failed', { id: toastId });
-        throw new Error(errorData.message || 'Login failed');
+      if (!result.success) {
+        toast.error(result.error || 'Login failed', { id: toastId });
+        setError(result.error || 'Login failed');
+        return;
       }
 
-      toast.success('Login successful!', { id: toastId });  
-      // revalidatePath("/")    
+      toast.success('Login successful!', { id: toastId });
+      
       router.refresh();
       router.push('/dashboard/blogs');
 
     } catch (err: any) {
-      setError(err.message);
-      toast.error(err.message, { id: toastId });
+      const errorMsg = err.message || 'Something went wrong';
+      setError(errorMsg);
+      toast.error(errorMsg, { id: toastId });
     } finally {
       setIsLoading(false);
     }
@@ -80,12 +62,9 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
-
-
       <Card className="w-md">
         <CardHeader>
           <CardTitle>Login</CardTitle>
-          {/* <CardDescription>Enter your credentials.</CardDescription> */}
         </CardHeader>
         <CardContent>
           <Form {...form}>

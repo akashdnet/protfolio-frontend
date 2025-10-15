@@ -1,6 +1,7 @@
 "use server";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
+import { parseSetCookieHeader } from "./parseSetCookieHeader";
 
 export interface TBlog {
   _id: string
@@ -44,15 +45,15 @@ interface FetchOptions {
   term?: string;
 }
 
-export const getBlogData = async ({page = 1,limit = 5,term = "",}: FetchOptions): Promise<ApiResponse> => {
+export const getBlogData = async ({ page = 1, limit = 5, term = "", }: FetchOptions): Promise<ApiResponse> => {
 
   // console.log(page, limit)
-  
+
   // console.log("action", limit)
   const queryParams = new URLSearchParams();
   queryParams.append("page", page.toString());
   queryParams.append("limit", limit.toString());
-  if ( term != "undefined") {
+  if (term != "undefined") {
     queryParams.append("term", term);
   }
 
@@ -97,7 +98,17 @@ export const getBlogData = async ({page = 1,limit = 5,term = "",}: FetchOptions)
 
 
 
+
 export const createBlogData = async ({ data, image }: CreateDataProps) => {
+
+
+  const cookieStore = await cookies()
+  const cookiesOptions = {
+    access_token: cookieStore.get('access_token')?.value,
+    refresh_token: cookieStore.get('refresh_token')?.value,
+  }
+
+
   const formData = new FormData();
   formData.append("data", JSON.stringify(data));
   if (image) {
@@ -111,9 +122,19 @@ export const createBlogData = async ({ data, image }: CreateDataProps) => {
       method: "POST",
       body: formData,
       credentials: "include",
+      headers: {
+        Cookie: `access_token=${cookiesOptions.access_token}; refresh_token=${cookiesOptions.refresh_token}`
+      },
     });
 
     const result = await res.json();
+    const setCookieHeader = res.headers.get('set-cookie')
+    if (setCookieHeader) {
+      const tokens = parseSetCookieHeader(setCookieHeader)
+      tokens.forEach(t => {
+        cookieStore.set(t.name, t.value, t.options)
+      })
+    }
     revalidateTag("blogs");
     return result;
   } catch (error: any) {
@@ -133,18 +154,18 @@ export const createBlogData = async ({ data, image }: CreateDataProps) => {
 
 
 
-export const editBlogData = async ({data,image,}: {data: any;image: any;}) => {
+export const editBlogData = async ({ data, image, }: { data: any; image: any; }) => {
 
 
-    const cookieStore = await cookies()
-    const cookiesOptions= {
+  const cookieStore = await cookies()
+  const cookiesOptions = {
     access_token: cookieStore.get('access_token')?.value,
     refresh_token: cookieStore.get('refresh_token')?.value,
   }
 
   const formData = new FormData();
   formData.append("data", JSON.stringify(data));
-  if(image) {
+  if (image) {
     formData.append("thumbnail", image);
   }
 
@@ -161,8 +182,19 @@ export const editBlogData = async ({data,image,}: {data: any;image: any;}) => {
       },
     });
 
-    const result =  res.json();
-    console.log(result)
+
+
+
+
+    const result = res.json();
+    const setCookieHeader = res.headers.get('set-cookie')
+    if (setCookieHeader) {
+      const tokens = parseSetCookieHeader(setCookieHeader)
+      tokens.forEach(token => {
+        cookieStore.set(token.name, token.value, token.options)
+      })
+    }
+    // console.log(result)
     revalidateTag("blogs");
     return result;
   } catch (error: any) {
@@ -171,9 +203,18 @@ export const editBlogData = async ({data,image,}: {data: any;image: any;}) => {
   }
 };
 
+
+
+
+
+
+
+
+
+
 export const deleteBlogData = async (id: string) => {
   const cookieStore = await cookies()
-  const cookiesOptions= {
+  const cookiesOptions = {
     access_token: cookieStore.get('access_token')?.value,
     refresh_token: cookieStore.get('refresh_token')?.value,
   }
@@ -190,6 +231,13 @@ export const deleteBlogData = async (id: string) => {
     });
 
     const result: ApiResponse = await res.json();
+    const setCookieHeader = res.headers.get('set-cookie')
+    if (setCookieHeader) {
+      const tokens = parseSetCookieHeader(setCookieHeader)
+      tokens.forEach(token => {
+        cookieStore.set(token.name, token.value, token.options)
+      })
+    }
 
     if (!result.success) {
       throw new Error(result.message);

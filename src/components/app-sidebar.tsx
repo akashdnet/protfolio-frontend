@@ -18,6 +18,7 @@ import Link from "next/link"
 import { Button } from "./ui/button"
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast"
+import { logoutAction } from "@/action/auth.action"
 
 // This is sample data.
 const data = {
@@ -55,6 +56,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const data = await res.json()
     
     if (data.success) {
+      await logoutAction()
       toast.success("Logged out successfully!", { id: toastId });   
       router.refresh();   
       router.push("/"); 
