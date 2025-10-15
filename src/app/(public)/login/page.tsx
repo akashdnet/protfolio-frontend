@@ -67,7 +67,8 @@ export default function LoginPage() {
 
       toast.success('Login successful!', { id: toastId });  
       // revalidatePath("/")    
-      // router.push('/dashboard/blogs');
+      router.refresh();
+      router.push('/dashboard/blogs');
 
     } catch (err: any) {
       setError(err.message);

@@ -46,7 +46,7 @@ interface FetchOptions {
 
 export const getBlogData = async ({page = 1,limit = 5,term = "",}: FetchOptions): Promise<ApiResponse> => {
 
-  console.log(page, limit)
+  // console.log(page, limit)
   
   // console.log("action", limit)
   const queryParams = new URLSearchParams();
@@ -57,7 +57,7 @@ export const getBlogData = async ({page = 1,limit = 5,term = "",}: FetchOptions)
   }
 
 
-  console.log(`ddd`,queryParams)
+  // console.log(`ddd`,queryParams)
 
   const url = `${process.env.NEXT_PUBLIC_API_URL}/blog/all-blogs?${queryParams.toString()}`;
   // console.log(`url`, url)
@@ -75,7 +75,7 @@ export const getBlogData = async ({page = 1,limit = 5,term = "",}: FetchOptions)
     }
 
     const data = await res.json();
-    console.log(data)
+    // console.log(data)
 
     return data;
   } catch (error) {

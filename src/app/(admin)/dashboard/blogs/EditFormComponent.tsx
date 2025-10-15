@@ -33,7 +33,7 @@ const handleSubmit = async (data:any) => {
   setLoading(true)
     const init =  withErrorHandler(editBlogData, {})
     const res = await init({data:{...data, _id:initialData?._id }, image:file?.file})
-    console.log(`edit`,res)
+    // console.log(`edit`,res)
     if(res.success){
       onHandleClose()
     }

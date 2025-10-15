@@ -21,7 +21,7 @@ export default function PaginationComponent({meta, queries}:{meta:TMeta, queries
         router.push("?" + params.toString());
         router.refresh()
     },[inputLimit])
-    console.log(params.get("limit"))
+    // console.log(params.get("limit"))
     
     const updateQuery = (page: number, limit: number, term: string = "") => {
     
@@ -35,7 +35,7 @@ export default function PaginationComponent({meta, queries}:{meta:TMeta, queries
     router.push("?" + params.toString());
   };   
 
-  console.log(`input limit ${inputLimit}`)
+  // console.log(`input limit ${inputLimit}`)
 
   return (
     <div className="flex items-center justify-between">

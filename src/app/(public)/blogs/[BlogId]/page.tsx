@@ -10,13 +10,13 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { BlogId } = await params;
 
-  console.log(`blog id:`, BlogId);
+  // console.log(`blog id:`, BlogId);
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog/${BlogId}`);
   const { data: blog } = await res.json();
 
   // const blog = result.data;
-  console.log(blog);
+  // console.log(blog);
 
   return {
     title: `${blog?.title} | Blog by Md Imtiaz Khondoker Akash`,

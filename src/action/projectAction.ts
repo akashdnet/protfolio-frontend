@@ -47,7 +47,7 @@ interface FetchOptions {
 
 export const getProjectData = async ({page = 1,limit = 5,term = "",}: FetchOptions): Promise<ApiResponse> => {
 
-  console.log(page, limit)
+  // console.log(page, limit)
   
   // console.log("action", limit)
   const queryParams = new URLSearchParams();
@@ -61,7 +61,7 @@ export const getProjectData = async ({page = 1,limit = 5,term = "",}: FetchOptio
   // console.log(`ddd`,queryParams)
 
   const url = `${process.env.NEXT_PUBLIC_API_URL}/project/all-projects?${queryParams.toString()}`;
-  console.log(`url`, url)
+  // console.log(`url`, url)
 
   try {
     const res = await fetch(url, {
@@ -76,7 +76,7 @@ export const getProjectData = async ({page = 1,limit = 5,term = "",}: FetchOptio
     }
 
     const data = await res.json();
-    console.log(data)
+    // console.log(data)
 
     return data;
   } catch (error) {
@@ -163,7 +163,7 @@ export const editProjectData = async ({data,image,}: {data: any;image: any;}) =>
     });
 
     const result =  res.json();
-    console.log(result)
+    // console.log(result)
     revalidateTag("projects");
     return result;
   } catch (error: any) {
