@@ -22,14 +22,29 @@ export async function loginAction(email: string, password: string) {
 
     const data = await response.json()
 
-    const cookieStore = await cookies()    
-    const setCookieHeader = response.headers.get('set-cookie')
-    if(setCookieHeader){
-        const tokens = parseSetCookieHeader(setCookieHeader)
-     tokens.forEach(token => {
-        cookieStore.set(token.name, token.value, token.options)
-      })
-    }
+   const cookiesStore = await cookies()
+
+   cookiesStore.set('access_token', data.access_token,{
+    secure: true,
+    httpOnly: true,
+    path:"/" 
+   })
+   cookiesStore.set('refresh_token', data.refresh_token,{
+    secure: true,
+    httpOnly: true,
+    path:"/" 
+   })
+
+    
+    // const cookieStore = await cookies()    
+    // const cookieStore = await cookies()    
+    // const setCookieHeader = response.headers.get('set-cookie')
+    // if(setCookieHeader){
+    //     const tokens = parseSetCookieHeader(setCookieHeader)
+    //  tokens.forEach(token => {
+    //     cookieStore.set(token.name, token.value, token.options)
+    //   })
+    // }
 
 
 
