@@ -27,12 +27,12 @@ export async function loginAction(email: string, password: string) {
    cookiesStore.set('access_token', data.access_token,{
     secure: true,
     httpOnly: true,
-    path:"/" 
+    
    })
    cookiesStore.set('refresh_token', data.refresh_token,{
     secure: true,
     httpOnly: true,
-    path:"/" 
+
    })
 
     
