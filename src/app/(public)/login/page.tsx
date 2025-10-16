@@ -49,7 +49,7 @@ export default function LoginPage() {
       toast.success('Login successful!', { id: toastId });
       
       router.refresh();
-      router.push('/dashboard/blogs');
+      router.push('/');
 
     } catch (err: any) {
       const errorMsg = err.message || 'Something went wrong';
