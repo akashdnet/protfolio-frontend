@@ -48,7 +48,7 @@ export default function LoginPage() {
 
       toast.success('Login successful!', { id: toastId });
       
-      router.refresh();
+      // router.refresh();f
       router.push('/');
 
     } catch (err: any) {
